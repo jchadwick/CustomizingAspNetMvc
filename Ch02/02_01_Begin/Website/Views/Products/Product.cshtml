@@ -53,7 +53,7 @@
 
     <p>
       <span class="price">@Html.DisplayFor(modelItem => modelItem.Price)</span>
-      <s class="text-muted">@Html.DisplayFor(modelItem => modelItem.MSRP)</s>
+      <span class="text-muted">@Html.DisplayFor(modelItem => modelItem.MSRP)</span>
       @{
           var discount = (Model.MSRP - Model.Price) / Model.MSRP;
       }

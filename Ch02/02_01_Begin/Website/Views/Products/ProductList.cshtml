@@ -26,7 +26,7 @@
           </h4>
           <p>
             <span class="price">@Html.DisplayFor(x => product.Price)</span>
-            <s class="text-muted">@Html.DisplayFor(x => product.MSRP)</s>
+            <span class="text-muted">@Html.DisplayFor(x => product.MSRP)</span>
             @if (discount > .05)
             {
                 <span class="discount label label-primary">
