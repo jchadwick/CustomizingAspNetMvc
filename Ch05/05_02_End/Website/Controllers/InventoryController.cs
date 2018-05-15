@@ -24,7 +24,7 @@ namespace HPlusSports.Controllers
         {
             var products =
               _context.Products
-                .OrderBy(x => x.Category.Name)
+                .OrderBy(x => x.CategoryId)
                 .ThenBy(x => x.Name);
 
             return View(products);

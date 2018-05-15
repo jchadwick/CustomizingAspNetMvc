@@ -10,11 +10,6 @@ namespace HPlusSports.Controllers
     {
         private HPlusSportsDbContext _context;
 
-        public InventoryController()
-          : this(new HPlusSportsDbContext())
-        {
-        }
-
         public InventoryController(HPlusSportsDbContext context)
         {
             _context = context;
@@ -24,7 +19,7 @@ namespace HPlusSports.Controllers
         {
             var products =
               _context.Products
-                .OrderBy(x => x.Category.Name)
+                .OrderBy(x => x.CategoryId)
                 .ThenBy(x => x.Name);
 
             return View(products);
@@ -81,34 +76,35 @@ namespace HPlusSports.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(long id, Product product)
+        public ActionResult Update(UpdateProductRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            var existing = _context.Products.Find(id);
+            request.LastUpdatedUserId = GetUserId(this);
+
+            var existing = _context.Products.Find(request.Id);
 
             if (existing == null)
             {
                 return ProductListError(
-                  $"Couldn't update product #\"{id}\": product not found!"
+                  $"Couldn't update product #\"{request.Id}\": product not found!"
                 );
             }
 
-            var hasPriceChanged = existing.Price != product.Price;
+            var hasPriceChanged = existing.Price != request.Price;
 
-            existing.CategoryId = product.CategoryId;
-            existing.Description = product.Description;
-            existing.MSRP = product.MSRP;
-            existing.Name = product.Name;
-            existing.Price = product.Price;
-            existing.SKU = product.SKU;
-            existing.Summary = product.Summary;
-
+            existing.CategoryId = request.CategoryId;
+            existing.Description = request.Description;
+            existing.MSRP = request.MSRP;
+            existing.Name = request.Name;
+            existing.Price = request.Price;
+            existing.SKU = request.SKU;
+            existing.Summary = request.Summary;
             existing.LastUpdated = DateTime.UtcNow;
-            existing.LastUpdatedUserId = GetUserId(this);
+            existing.LastUpdatedUserId = request.LastUpdatedUserId;
 
             _context.SaveChanges();
 
@@ -117,13 +113,13 @@ namespace HPlusSports.Controllers
                 var cartsToUpdate =
                   _context.ShoppingCarts
                     .Include("Items")
-                    .Where(cart => cart.Items.Any(x => x.SKU == product.SKU));
+                    .Where(cart => cart.Items.Any(x => x.SKU == request.SKU));
 
                 foreach (var cart in cartsToUpdate)
                 {
-                    foreach (var cartItem in cart.Items.Where(x => x.SKU == product.SKU))
+                    foreach (var cartItem in cart.Items.Where(x => x.SKU == request.SKU))
                     {
-                        cartItem.Price = product.Price;
+                        cartItem.Price = request.Price;
                     }
 
                     cart.Recalculate();
@@ -133,7 +129,7 @@ namespace HPlusSports.Controllers
             _context.SaveChanges();
 
             TempData["SuccessMessage"] =
-              $"Successfully updated \"{product.Name}\"";
+              $"Successfully updated \"{request.Name}\"";
 
             return RedirectToAction(nameof(Index));
         }
