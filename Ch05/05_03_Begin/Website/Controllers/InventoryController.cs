@@ -37,15 +37,24 @@ namespace HPlusSports.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create([Bind(Exclude = "Id")]Product product)
+        public ActionResult Create(CreateProductRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            product.LastUpdated = DateTime.UtcNow;
-            product.LastUpdatedUserId = GetUserId(this);
+            var product = new Product {
+                CategoryId = request.CategoryId,
+                Description = request.Description,
+                MSRP = request.MSRP,
+                Name = request.Name,
+                Price = request.Price,
+                SKU = request.SKU,
+                Summary = request.Summary,
+                LastUpdated = DateTime.UtcNow,
+                LastUpdatedUserId = GetUserId(this),
+            };
 
             _context.Products.Add(product);
             _context.SaveChanges();
