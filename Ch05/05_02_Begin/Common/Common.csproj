@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\CreateProductRequest.cs" />
     <Compile Include="Models\EntityNotFoundException.cs" />
     <Compile Include="Models\HPlusSportsDbContext.cs" />
     <Compile Include="Models\HPlusSportsDbContext.SeedData.cs" />
