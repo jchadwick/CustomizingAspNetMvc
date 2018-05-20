@@ -6,6 +6,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using HPlusSports.Models;
+using System.Text.RegularExpressions;
 
 namespace HPlusSports
 {
@@ -60,7 +61,7 @@ namespace HPlusSports
                   {
                       CategoryId = categories.First(cat => cat.Name == x.Element("Category").Value).Id,
                       Name = x.Element("Name").Value,
-                      Description = x.Element("Description").Value,
+                      Description = StripHtml(x.Element("Description").Value),
                       MSRP = double.Parse(x.Element("MSRP").Value),
                       Price = double.Parse(x.Element("Price").Value),
                       SKU = x.Element("SKU").Value,
@@ -117,6 +118,21 @@ namespace HPlusSports
             {
                 return XDocument.Parse(reader.ReadToEnd());
             }
+        }
+
+        private static string StripHtml(string source)
+        {
+            return
+                Regex.Replace(
+                    Regex.Replace(
+                        source.Replace("<h2>Description</h2>", ""),
+                        "<[^>]*>", 
+                        ""
+                    ),
+                    "&#[^;]*;",
+                    ""
+                )
+                .Trim();
         }
     }
 }
