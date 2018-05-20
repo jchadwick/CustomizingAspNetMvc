@@ -57,7 +57,7 @@
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\ShoppingCartItem.cs" />
-    <Compile Include="Models\UpdateProductRequest.cs" />
+    <Compile Include="Requests\UpdateProductRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

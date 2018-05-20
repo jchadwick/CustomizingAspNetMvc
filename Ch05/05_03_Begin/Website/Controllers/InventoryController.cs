@@ -1,7 +1,8 @@
-﻿using HPlusSports.Models;
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using HPlusSports.Models;
+using HPlusSports.Requests;
 
 namespace HPlusSports.Controllers
 {
@@ -54,8 +55,7 @@ namespace HPlusSports.Controllers
             _context.Products.Add(product);
             _context.SaveChanges();
 
-            TempData["SuccessMessage"] =
-              $"Successfully created \"{product.Name}\"";
+            TempData.SuccessMessage($"Successfully created \"{product.Name}\"");
 
             return RedirectToAction(nameof(Index));
         }
@@ -67,9 +67,7 @@ namespace HPlusSports.Controllers
 
             if (existing == null)
             {
-                return ProductListError(
-                  $"Couldn't update product #\"{id}\": product not found!"
-                );
+                TempData.ErrorMessage($"Couldn't update product #\"{id}\": product not found!");
             }
 
             return View(existing);
@@ -89,9 +87,8 @@ namespace HPlusSports.Controllers
 
             if (existing == null)
             {
-                return ProductListError(
-                  $"Couldn't update product #\"{request.Id}\": product not found!"
-                );
+                TempData.ErrorMessage($"Couldn't update product #\"{request.Id}\": product not found!");
+                return View();
             }
 
             var hasPriceChanged = existing.Price != request.Price;
@@ -128,8 +125,7 @@ namespace HPlusSports.Controllers
 
             _context.SaveChanges();
 
-            TempData["SuccessMessage"] =
-              $"Successfully updated \"{request.Name}\"";
+            TempData.SuccessMessage($"Successfully updated \"{request.Name}\"");
 
             return RedirectToAction(nameof(Index));
         }
@@ -138,25 +134,18 @@ namespace HPlusSports.Controllers
         {
             var product = _context.Products.Find(id);
 
-            if (product == null)
+            if (product != null)
             {
-                return ProductListError(
-                  $"Couldn't delete \"{product.Name}\": product not found!"
-                );
+                _context.Products.Remove(product);
+                _context.SaveChanges();
+
+                TempData.SuccessMessage($"Successfully deleted \"{product.Name}\"");
+            }
+            else
+            {
+                TempData.ErrorMessage($"Couldn't delete \"{product.Name}\": product not found!");
             }
 
-            _context.Products.Remove(product);
-            _context.SaveChanges();
-
-            TempData["SuccessMessage"] =
-              $"Successfully deleted \"{product.Name}\"";
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        private ActionResult ProductListError(string error)
-        {
-            TempData["ErrorMessage"] = error;
             return RedirectToAction(nameof(Index));
         }
 

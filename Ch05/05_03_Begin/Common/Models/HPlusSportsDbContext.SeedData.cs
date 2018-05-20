@@ -125,7 +125,7 @@ namespace HPlusSports
             return
                 Regex.Replace(
                     Regex.Replace(
-                        source.Replace("<h2>Description</h2>", ""),
+                        source,
                         "<[^>]*>", 
                         ""
                     ),

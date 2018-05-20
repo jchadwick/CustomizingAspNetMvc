@@ -4,18 +4,18 @@
     ViewBag.Title = "Inventory";
 }
 
-@if (TempData["SuccessMessage"] != null)
+@if (TempData.HasSuccessMessage())
 {
     <div class="alert alert-error alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      @TempData["SuccessMessage"]
+      @TempData.SuccessMessage()
     </div>
 }
-else if (TempData["ErrorMessage"] != null)
+else if (TempData.HasErrorMessage())
 {
     <div class="alert alert-error alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      @TempData["ErrorMessage"]
+      @TempData.ErrorMessage()
     </div>
 }
 
