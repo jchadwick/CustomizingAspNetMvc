@@ -1,4 +1,4 @@
-﻿@model HPlusSports.Models.CreateProductRequest
+﻿@model HPlusSports.Models.Product
 
 @{
     ViewBag.Title = "Add New Product";
@@ -7,6 +7,16 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
+
+    @*
+      Add these hidden fields so validation doesn't fail,
+      even though they are going to get overridden on the
+      server anyway.
+    *@
+    @Html.Hidden(nameof(Model.LastUpdated), DateTime.Now.ToString())
+    @Html.Hidden(nameof(Model.LastUpdatedUserId), User.Identity.Name)
+
 
     <div class="form-horizontal">
       <h4>Product</h4>

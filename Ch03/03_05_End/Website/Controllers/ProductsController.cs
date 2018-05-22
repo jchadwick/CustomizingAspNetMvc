@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using HPlusSports.Extensions;
 using HPlusSports.Models;
 
 namespace HPlusSports.Controllers
@@ -21,7 +20,6 @@ namespace HPlusSports.Controllers
             return Category(null, page, count);
         }
 
-        [AllowPartialRendering]
         public ActionResult Category(string id, int? page = null, int? count = null)
         {
             var category = _context.Categories.FirstOrDefault(x => x.Key == id);
@@ -71,19 +69,12 @@ namespace HPlusSports.Controllers
 
             /**** End Paging Logic ****/
 
-            var vm = new ProductsListViewModel
+            if (Request.IsAjaxRequest())
             {
-                Products = products.Select(x => new ProductViewModel {
-                    MSRP = x.MSRP,
-                    Name = x.Name,
-                    Price = x.Price,
-                    SKU = x.SKU,
-                    Rating = ratings.FirstOrDefault(y => x.SKU == y.SKU),
-                })
-            };
+                return PartialView("ProductList", model);
+            }
 
-
-            return View("ProductList", vm);
+            return View("ProductList", model);
         }
 
         public ActionResult Product(string id)

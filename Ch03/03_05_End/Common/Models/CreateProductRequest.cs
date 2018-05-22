@@ -1,13 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace HPlusSports.Models
 {
-    public class UpdateProductRequest
+    public class CreateProductRequest
     {
-        [Required]
-        public long Id { get; set; }
-
-        [Required]
+        [Range(1, long.MaxValue)]
         public long CategoryId { get; set; }
 
         [Required]
@@ -31,7 +32,5 @@ namespace HPlusSports.Models
         [Range(minimum: 0, maximum: double.MaxValue)]
         [DataType(DataType.Currency)]
         public double Price { get; set; }
-
-        public string LastUpdatedUserId { get; set; }
     }
 }

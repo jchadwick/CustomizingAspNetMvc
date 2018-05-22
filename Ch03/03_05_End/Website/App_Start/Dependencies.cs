@@ -17,9 +17,6 @@ namespace HPlusSports.App_Start
             builder.RegisterType<HPlusSportsDbContext>()
                     .InstancePerRequest();
 
-            builder.RegisterType<HPlusSports.Services.ProductUpdateService>()
-                .InstancePerRequest();
-
             var container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
