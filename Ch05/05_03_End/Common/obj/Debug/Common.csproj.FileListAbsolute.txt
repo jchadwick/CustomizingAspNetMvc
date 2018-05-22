@@ -8,3 +8,4 @@ C:\Code\HPlusSports\Common\bin\Debug\EntityFramework.SqlServer.xml
 C:\Code\HPlusSports\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 C:\Code\HPlusSports\Common\obj\Debug\HPlusSports.Common.dll
 C:\Code\HPlusSports\Common\obj\Debug\HPlusSports.Common.pdb
+C:\Code\HPlusSports\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
