@@ -1,0 +1,10 @@
+C:\Code\HPlusSports\Common\bin\Debug\HPlusSports.Common.dll.config
+C:\Code\HPlusSports\Common\bin\Debug\HPlusSports.Common.dll
+C:\Code\HPlusSports\Common\bin\Debug\HPlusSports.Common.pdb
+C:\Code\HPlusSports\Common\bin\Debug\EntityFramework.dll
+C:\Code\HPlusSports\Common\bin\Debug\EntityFramework.SqlServer.dll
+C:\Code\HPlusSports\Common\bin\Debug\EntityFramework.xml
+C:\Code\HPlusSports\Common\bin\Debug\EntityFramework.SqlServer.xml
+C:\Code\HPlusSports\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Code\HPlusSports\Common\obj\Debug\HPlusSports.Common.dll
+C:\Code\HPlusSports\Common\obj\Debug\HPlusSports.Common.pdb
