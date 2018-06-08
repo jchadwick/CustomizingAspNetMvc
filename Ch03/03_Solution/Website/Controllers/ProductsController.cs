@@ -90,7 +90,6 @@ namespace HPlusSports.Controllers
                     .Select(img => img.Id)
                     .ToArray();
 
-            ViewData["Rating"] = _context.GetProductRating(product.SKU);
             ViewData["Category"] = product.Category;
             ViewData["Images"] = imageIds;
 
@@ -104,6 +103,13 @@ namespace HPlusSports.Controllers
             var cart = _context.ShoppingCarts.FirstOrDefault(x => x.UserId == userId)
                        ?? new ShoppingCart { UserId = userId };
             return PartialView("MenuCart", cart);
+        }
+
+        [ChildActionOnly]
+        public ActionResult Rating(string sku)
+        {
+            var rating = _context.GetProductRating(sku);
+            return PartialView("_Rating", rating);
         }
     }
 }

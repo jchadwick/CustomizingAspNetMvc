@@ -9,6 +9,11 @@ namespace HPlusSports
     public static class HtmlHelperExtensions
     {
 
+        public static IHtmlString Rating(this System.Web.Mvc.HtmlHelper html, string sku)
+        {
+            return html.Action("Rating", "Products", new { sku });
+        }
+
         public static IHtmlString Rating(this System.Web.Mvc.HtmlHelper html, Models.ProductRating rating)
         {
             if (rating == null || rating.ReviewCount == 0)
